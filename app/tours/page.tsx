@@ -9,23 +9,30 @@ type Tour = {
     price: string;
 }
 
+const fetchTours = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
-async function ToursPage(){
     const response = await fetch(url);
-    const data:Tour[] = await response.json();
+    const data: Tour[] = await response.json();
+    return data;
+}
+
+async function ToursPage() {
+    const data = await fetchTours();
 
     console.log(data);
-    
-    return <section>
-        <h1 className="text-3xl mb-4">Tour</h1>
 
-        {
-            data.map((tour) =>{
-                return <h2 key={tour.id}>{tour.name}</h2>
-            })
-        }
-    </section>
+    return (
+        <section>
+            <h1 className="text-3xl mb-4">Tour</h1>
 
+            {
+                data.map((tour) => {
+                    return <h2 key={tour.id}>{tour.name}</h2>
+                })
+            }
+        </section>
+    )
 }
 
 export default ToursPage
